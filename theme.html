@@ -1,0 +1,306 @@
+<html>
+    <head>
+        <title>{block:PostSummary}{PostSummary} @ {/block:PostSummary}{Title}</title>
+        <link ref="icon" href="{Favicon}">
+        <meta name="color:Background" content="#ffffff">
+        <meta name="text:Image Border" content="2px"
+        <meta name="color:Image Border Color" content="#000000">
+        <meta name="font:Title Font" content="monospace">
+        <meta name="color:Title Link Color" content="#262626">
+        <meta name="color:Title Link Visited Color" content="0d0d0d">
+        <meta name="font:Info Font" content="monospace">
+        <meta name="color:Tag Link Color" content="#262626">
+        <meta name="color:Tag Link Visited Color" content="#0d0d0d">
+        <meta name="color:Tag Background Color" content="#e6e6e6">
+        <meta name="text:Tag Border Width" content="1px">
+        <meta name="color:Tag Border Color" content="#000000">
+        <meta name="color:Post Background" content="#e6e6e6">
+        <meta name="text:Post Border" content="2px">
+        <meta name="color:Post Border Color" content="#000000">
+        <meta name="font:Font" content="sans-serif">
+        <meta name="color:Link Color" content="#262626">
+        <meta name="color:Link Visited Color" content="#0d0d0d">
+    </head>
+    <style>
+        body {
+            background-color:{color:Background};
+            font-family:{font:Font};
+        }
+        #posts {
+            position:absolute;
+            left:400px;
+            top:10px;
+        }
+        .post {
+            margin:25px;
+            padding:10px;
+            width:500px;
+            background-color:{color:Post Background};
+            border-width:{text:Post Border};
+            border-color:{color:Post Border Color};
+            border-style:solid;
+        }
+        ul li {
+            list-style-type:none;
+        }
+        #sidebar {
+            position:fixed;
+            width:200px;
+            top:300px;
+            left:15px;
+        }
+        .postImage {
+            border-width:{text:Image Border};
+            border-style:solid;
+            border-color:{color:Image Border Color};
+            margin-top:2px;
+            margin-bottom:2px;
+        }
+        .title {
+            font-family:{font:Title Font};
+            font-size:250%;
+        }
+        .title a {
+            color:{color:Title Link Color};
+            text-decoration:none;
+        }
+        .title a:visited {
+            color:{color:Title Link Visited Color};
+        }
+        .info {
+            font-family:{font:Info Font};
+            font-size:70%;
+            margin:1px;
+            padding:2px;
+        }
+        .info .tag {
+            padding:2px;
+            background-color:{color:Tag Background Color};
+            color:{color:Tag Link Color};
+            text-decoration:none;
+            border-width:{text:Tag Border Width};
+            border-style:solid;
+            border-color:{color:Tag Border Color};
+            margin-left:3px;
+            margin-right:3px;
+        }
+        .info .tag:visited {
+            color:{color:Tag Link Visited Color};
+        }
+        a {
+            color:{color:Link Color};
+            text-decoration:none;
+        }
+        a:visited {
+            color:{color:Link Visited Color};
+        }
+        #list li {
+            list-style-type:square;
+        }
+    </style>
+    <body>
+        <div id="sidebar" class="block">
+            <div id="blogTitle" class="title">
+                <a href={BlogURL}>{Title}</a>
+            </div>
+            <div id="description" class="text">
+                {Description}
+            </div>
+            <ul id="links">
+                {block:AskEnabled}
+                    <li class="link"><a href="{BlogURL}/ask">{AskLabel}</a></li>
+                {/block:AskEnabled}
+                {block:SubmitEnabled}
+                    <li class="link"><a href="{BlogURL}/submit">{SubmitLabel}</a></li>
+                {/block:SubmitEnabled}
+                {block:HasPages}
+                    {block:Pages}
+                        <li class="link"><a href="{URL}">{Label}</a></li>
+                    {/block:Pages}
+                {/block:HasPages}
+            </ul>
+            {block:Pagination}
+                <div class="pagination">
+                    {block:PreviousPage}
+                        <a href="{PreviousPage}" id="prevPage">&lt; </a>
+                    {/block:PreviousPage}
+                    <span id="currentPage">{CurrentPage}</span>
+                    {block:NextPage}
+                        <a href="{NextPage}" id="nextPage"> &gt;</a>
+                    {/block:NextPage}
+                </div>
+            {/block:Pagination}
+            {block:PermalinkPagination}
+                <div class="pagination">
+                    {block:PreviousPost}
+                        <a href="{PreviousPost}" class="prevPage">&lt; </a>
+                    {/block:PreviousPost}
+                    {block:NextPost}
+                        <a href="{NextPost}" class="nextPage"> &gt;</a>
+                    {/block:NextPost}
+                </div>
+            {/block:PermalinkPagination}
+        </div>
+        {block:TagPage}
+            <div class="title tagTitle">
+                Posts tagged {Tag}
+            </div>
+        {/block:TagPage}
+        <ul id="posts">
+            {block:Posts}
+                <div class="post">
+                    {block:Submission}
+                        <div class="info submitter">
+                            Submitted by <a href="{SubmitterURL}">{Submitter}</a>
+                        </div>
+                    {/block:Submission}
+                    {block:Text}
+                        <li class="postMain">
+                            {block:Title}
+                                <div class="title postTitle">
+                                    <a href="{Permalink}">{Title}</a>
+                                </div> 
+                            {/block:Title}
+                            <div class="text postBody">
+                                {Body}
+                            </div>
+                        </li>
+                    {/block:Text}
+                    {block:Photo}
+                        <li class="postMain">
+                            <img class="postImage" src="{PhotoURL-400}">
+                            {block:Caption}
+                                <div class="text postBody">
+                                    {Caption}
+                                </div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Photo}
+                    {block:Photoset}
+                        <li class="postMain">
+                            {block:Photos}
+                                <img class="postImage" src="{PhotoURL-400}">
+                            {/block:Photos}
+                            {block:Caption}
+                                <div class="text postBody">
+                                    {Caption}
+                                </div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Photoset}
+                    {block:Quote}
+                        <li class="postMain">
+                            <div class="title quote">
+                                {Quote}
+                            </div>
+                            {block:Source}
+                                <div class="text postBody quoteSource">- {Source}</div>
+                            {/block:Source}
+                        </li>
+                    {/block:Quote}
+                    {block:Link}
+                        <li class="postMain">
+                            <a href="{URL}" class="link" {Target}>
+                                {block:Thumbnail}
+                                    <img class="image linkImage" src="{Thumbnail}">
+                                {/block:Thumbnail}
+                                <div class="title postTitle">{Name}</div>
+                            </a>
+                            {block:Description}
+                                <div class="text postBody">{Description}</div>
+                            {/block:Description}
+                            {block:Excerpt}
+                                <div class="text postBody">"{Excerpt}"</div>
+                            {/block:Excerpt}
+                            {block:Author}
+                                <div class="text postBody">by {Author}</div>
+                            {/block:Author}
+                        </li>
+                    {/block:Link}
+                    {block:Chat}
+                        <li class="postMain">
+                            {block:Title}
+                                <div class="title postTitle">
+                                    <a href="{Permalink}">{Title}</a>
+                                </div> 
+                            {/block:Title}
+                            <ul class="chat text postBody">
+                                {block:Lines}
+                                    <li class="{Alt} user_{UserNumber}">
+                                        {block:Label}
+                                            <span class="label">{Label}</span>
+                                        {/block:Label}{Line}
+                                    </li>
+                                {/block:Lines}
+                            </ul>
+                        </li>
+                    {/block:Chat}
+                    {block:Audio}
+                        <li class="postMain">
+                            {AudioEmbed-400}
+                            {block:TrackName}
+                                <div class="title postTitle">
+                                    {TrackName}
+                                </div>
+                            {/block:TrackName}
+                            {block:Artist}
+                                <div class="text postBody">
+                                    by {Artist}
+                                </div>
+                            {/block:Artist}
+                            {block:Album}
+                                <div class="text postBody">
+                                    from {Album}
+                                </div>
+                            {/block:Album}
+                            {block:Caption}
+                                <div class="text postBody">
+                                    {Caption}
+                                </div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Audio}
+                    {block:Video}
+                        <li class="postMain">
+                            {Video-400}
+                            {block:Caption}
+                                <div class="text postBody">
+                                    {Caption}
+                                </div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Video}
+                    {block:Answer}
+                        <li class="postMain">
+                            <div class="title postTitle question">
+                                {Asker}: {Question}
+                            </div>
+                            <div class="text postBody answer">
+                                {block:Answerer}
+                                    {Answerer}: {Answer}
+                                {/block:Answerer}
+                                {Replies}
+                            </div>
+                        </li>
+                    {/block:Answer}
+                    {block:Date}
+                        <div class="info date">{ShortDayOfWeek}, {DayOfMonth}{DayOfMonthSuffix} {Month} {Year} at {24Hour}:{Minutes}</div>
+                    {/block:Date}
+                    {block:NoteCount}
+                        <div class="info noteCount">{NoteCountWithLabel}</div>
+                    {/block:NoteCount}
+                    {block:HasTags}
+                        <div class="info tags">
+                            {block:Tags}
+                                <a href="{TagURL}" class="tag">{Tag}</a>
+                            {/block:Tags}
+                        </div>
+                    {/block:HasTags}
+                    {block:PostNotes}
+                        <div class="info notes">{PostNotes-16}</div>
+                    {/block:PostNotes}
+                </div>
+            {/block:Posts}
+        </ul>
+    </body>
+</html>
